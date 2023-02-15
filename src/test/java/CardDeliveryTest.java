@@ -5,11 +5,9 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Keys;
 
 
-
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-
 
 
 import static com.codeborne.selenide.Condition.*;
@@ -29,13 +27,12 @@ public class CardDeliveryTest {
     @BeforeEach
     public void setup() {
         open("http://localhost:9999/");
+        Configuration.holdBrowserOpen = true;
     }
 
 
     @Test
     void shouldTestSomething() {
-        Configuration.holdBrowserOpen = true;
-
         $x("//span[@data-test-id='city']//child::input").setValue("Москва");
         $x("//span[@class='menu-item__control']").click();
         $("[data-test-id='date'] input").doubleClick().sendKeys(Keys.BACK_SPACE);
@@ -52,7 +49,6 @@ public class CardDeliveryTest {
 
     @Test
     void shouldTestMeeting() {
-        Configuration.holdBrowserOpen = true;
         $x(".//span[@data-test-id='city']//child::input").val("Си");
         cityList.should(visible);
         cityList.$x(".//span[contains(text(), 'Симферополь')]//ancestor::div[contains(@class, 'menu-item')]").click();
@@ -70,7 +66,6 @@ public class CardDeliveryTest {
 
     @Test
     void shouldTestDropdown2() {
-        Configuration.holdBrowserOpen = true;
         $x(".//span[@data-test-id='city']//child::input").val("Си");
         cityList.should(visible);
         cityList.$x(".//span[contains(text(), 'Симферополь')]//ancestor::div[contains(@class, 'menu-item')]").click();
@@ -88,7 +83,6 @@ public class CardDeliveryTest {
 
     @Test
     void shouldTestBoundaryDate() {
-        Configuration.holdBrowserOpen = true;
         $x(".//span[@data-test-id='city']//child::input").val("Си");
         cityList.should(visible);
         cityList.$x(".//span[contains(text(), 'Симферополь')]//ancestor::div[contains(@class, 'menu-item')]").click();
@@ -105,8 +99,6 @@ public class CardDeliveryTest {
 
     @Test
     void shouldTestCity() {
-        Configuration.holdBrowserOpen = true;
-
         $x("//span[@data-test-id='city']//child::input").setValue("Электросталь");
         $("[data-test-id='date'] input").doubleClick().sendKeys(Keys.BACK_SPACE);
         $("[data-test-id='date'] input").setValue(meetingDay(5));
@@ -121,8 +113,6 @@ public class CardDeliveryTest {
 
     @Test
     void shouldTestName() {
-        Configuration.holdBrowserOpen = true;
-
         $x("//span[@data-test-id='city']//child::input").setValue("Москва");
         $("[data-test-id='date'] input").doubleClick().sendKeys(Keys.BACK_SPACE);
         $("[data-test-id='date'] input").setValue(meetingDay(5));
@@ -137,8 +127,6 @@ public class CardDeliveryTest {
 
     @Test
     void shouldTestPhone() {
-        Configuration.holdBrowserOpen = true;
-
         $x("//span[@data-test-id='city']//child::input").setValue("Москва");
         $("[data-test-id='date'] input").doubleClick().sendKeys(Keys.BACK_SPACE);
         $("[data-test-id='date'] input").setValue(meetingDay(5));
