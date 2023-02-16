@@ -1,5 +1,4 @@
 import com.codeborne.selenide.Configuration;
-import com.codeborne.selenide.SelenideElement;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Keys;
@@ -20,18 +19,12 @@ public class CardDeliveryTest {
     }
 
 
-    SelenideElement cityList = $$x("//body/div").get(2);
-
-
-
-
     @BeforeEach
     public void setup() {
         open("http://localhost:9999/");
         Configuration.holdBrowserOpen = true;
 
-        }
-
+    }
 
 
     @Test
@@ -51,12 +44,10 @@ public class CardDeliveryTest {
     }
 
 
-
-
     @Test
     void shouldTestBoundaryDate() {
         $x(".//span[@data-test-id='city']//child::input").setValue("Симферополь");
-        $x("//span[@class='menu-item__control']").click();;
+        $x("//span[@class='menu-item__control']").click();
         $("[data-test-id='date'] input").doubleClick().sendKeys(Keys.BACK_SPACE);
         $("[data-test-id='date'] input").setValue(meetingDay(-2));
         $("[name=name]").setValue("Иванов Иван");
@@ -71,7 +62,6 @@ public class CardDeliveryTest {
     @Test
     void shouldTestCity() {
         $x("//span[@data-test-id='city']//child::input").setValue("Электросталь");
-        //$x("//span[@class='menu-item__control']").click();
         $("[data-test-id='date'] input").doubleClick().sendKeys(Keys.BACK_SPACE);
         $("[data-test-id='date'] input").setValue(meetingDay(5));
         $("[name=name]").setValue("Иванов Иван");
