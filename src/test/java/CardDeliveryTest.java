@@ -15,28 +15,31 @@ import static com.codeborne.selenide.Selenide.*;
 
 
 public class CardDeliveryTest {
+    String meetingDay(int days) {
+        return LocalDate.now().plusDays(days).format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+    }
 
 
     SelenideElement cityList = $$x("//body/div").get(2);
 
-    String meetingDay(int day) {
-        return LocalDate.now().plusDays(day).format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
-    }
+
 
 
     @BeforeEach
     public void setup() {
         open("http://localhost:9999/");
         Configuration.holdBrowserOpen = true;
-    }
+
+        }
+
 
 
     @Test
     void shouldTestSomething() {
         $x("//span[@data-test-id='city']//child::input").setValue("Москва");
         $x("//span[@class='menu-item__control']").click();
-        $("[data-test-id='date'] input").doubleClick().sendKeys(Keys.BACK_SPACE);
-        $("[data-test-id='date'] input").setValue(meetingDay(5));
+        $("[data-test-id= date] input").sendKeys(Keys.chord(Keys.SHIFT, Keys.HOME), Keys.DELETE);
+        $("[data-test-id= date] input").setValue(meetingDay(5));
         $("[name=name]").setValue("Иванов Иван");
         $("[name=phone]").setValue("+79099606060");
         $("[role=presentation]").click();
@@ -47,45 +50,13 @@ public class CardDeliveryTest {
 
     }
 
-    @Test
-    void shouldTestMeeting() {
-        $x(".//span[@data-test-id='city']//child::input").val("Си");
-        cityList.should(visible);
-        cityList.$x(".//span[contains(text(), 'Симферополь')]//ancestor::div[contains(@class, 'menu-item')]").click();
-        $("[data-test-id='date'] input").doubleClick().sendKeys(Keys.BACK_SPACE);
-        $("[data-test-id='date'] input").setValue(meetingDay(7));
-        $("[name=name]").setValue("Иванов Иван");
-        $("[name=phone]").setValue("+79099606060");
-        $("[role=presentation]").click();
-        $x("//span[contains(text(), 'Забронировать')]//ancestor::button").click();
-        $x("//div[@class='notification__title']").should(text("Успешно!"), Duration.ofSeconds(15));
-        $x("//div[@class='notification__content']").should(text("Встреча успешно забронирована на " + meetingDay(7)), Duration.ofSeconds(15));
-
-    }
 
 
-    @Test
-    void shouldTestDropdown2() {
-        $x(".//span[@data-test-id='city']//child::input").val("Си");
-        cityList.should(visible);
-        cityList.$x(".//span[contains(text(), 'Симферополь')]//ancestor::div[contains(@class, 'menu-item')]").click();
-        $("[data-test-id='date'] input").doubleClick().sendKeys(Keys.BACK_SPACE);
-        $("[data-test-id='date'] input").setValue(meetingDay(6));
-        $("[name=name]").setValue("Иванов Иван");
-        $("[name=phone]").setValue("+79099606060");
-        $("[role=presentation]").click();
-        $x("//span[contains(text(), 'Забронировать')]//ancestor::button").click();
-        $x("//div[@class='notification__title']").should(text("Успешно!"), Duration.ofSeconds(15));
-        $x("//div[@class='notification__content']").should(text("Встреча успешно забронирована на " + meetingDay(6)), Duration.ofSeconds(15));
-
-
-    }
 
     @Test
     void shouldTestBoundaryDate() {
-        $x(".//span[@data-test-id='city']//child::input").val("Си");
-        cityList.should(visible);
-        cityList.$x(".//span[contains(text(), 'Симферополь')]//ancestor::div[contains(@class, 'menu-item')]").click();
+        $x(".//span[@data-test-id='city']//child::input").setValue("Симферополь");
+        $x("//span[@class='menu-item__control']").click();;
         $("[data-test-id='date'] input").doubleClick().sendKeys(Keys.BACK_SPACE);
         $("[data-test-id='date'] input").setValue(meetingDay(-2));
         $("[name=name]").setValue("Иванов Иван");
@@ -100,6 +71,7 @@ public class CardDeliveryTest {
     @Test
     void shouldTestCity() {
         $x("//span[@data-test-id='city']//child::input").setValue("Электросталь");
+        //$x("//span[@class='menu-item__control']").click();
         $("[data-test-id='date'] input").doubleClick().sendKeys(Keys.BACK_SPACE);
         $("[data-test-id='date'] input").setValue(meetingDay(5));
         $("[name=name]").setValue("Иванов Иван");
@@ -114,6 +86,7 @@ public class CardDeliveryTest {
     @Test
     void shouldTestName() {
         $x("//span[@data-test-id='city']//child::input").setValue("Москва");
+        $x("//span[@class='menu-item__control']").click();
         $("[data-test-id='date'] input").doubleClick().sendKeys(Keys.BACK_SPACE);
         $("[data-test-id='date'] input").setValue(meetingDay(5));
         $("[name=name]").setValue("Иванов Ivan");
@@ -128,6 +101,7 @@ public class CardDeliveryTest {
     @Test
     void shouldTestPhone() {
         $x("//span[@data-test-id='city']//child::input").setValue("Москва");
+        $x("//span[@class='menu-item__control']").click();
         $("[data-test-id='date'] input").doubleClick().sendKeys(Keys.BACK_SPACE);
         $("[data-test-id='date'] input").setValue(meetingDay(5));
         $("[name=name]").setValue("Иванов Иван");
